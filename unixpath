@@ -1,0 +1,32 @@
+/**
+ *	This string simplifies a unix path while using stack and string stream
+ *
+ *	@param string path, the original unix path
+ *	@return the simplified unix path
+*/
+
+string simplifyPath(string path) {
+    stack<string> dir;
+    string res = "", val;
+    istringstream ss(path);
+    while(getline(ss, val, '/')){
+        if(val.size() == 0 || val == ".")
+            continue;
+        if(val == "..") {
+            if(!dir.empty())
+                dir.pop();
+        } 
+        else{
+            dir.push(val);
+        }
+    }
+        
+    if(dir.empty())
+        return "/";
+        
+    while(!dir.empty()){
+        res = "/" + dir.top() + res;
+        dir.pop();
+        }
+    return res;
+}
